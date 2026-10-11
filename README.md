@@ -47,3 +47,9 @@ The helper exits on parent death, pipe disconnect, or ten seconds without a requ
 This collects twelve samples, checks paused heartbeats for eleven seconds, disconnects, and checks helper exit. Diagnostic output can contain local/session details; review it before sharing. `--ui-smoke --out screenshot.png` captures the frontend without starting a helper.
 
 See [investigation findings](docs/investigation.md) for the distinction between local OSC and remote avatar networking. Private session dumps and proprietary binary/disassembly evidence are excluded from this repository.
+
+## Automatic releases
+
+Pushes to the default branch (`main`) build and run self-tests on Windows, then publish a ZIP using GitHub CLI. Each release has a `build-<full commit SHA>` tag targeting the built commit, its subject as the title, and its complete commit message as the notes. Pull requests and other branches only build.
+
+New pushes cancel earlier runs on that branch. The final publishing step queries the current branch head and skips release creation if its commit was superseded; API errors stop publication. Checking the ref and creating a release are separate GitHub API operations, so a push arriving after the check can still race publication. Rerunning a published commit cannot create another release with the same tag.

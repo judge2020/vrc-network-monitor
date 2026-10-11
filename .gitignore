@@ -1,0 +1,21 @@
+bin/
+obj/
+publish/
+tools/
+.vs/
+*.user
+*.suo
+*.exe
+*.dll
+*.pdb
+*.zip
+*.etl
+*.dmp
+__pycache__/
+*.pyc
+# Local investigation evidence and personal session data
+investigation/
+investigation.txt
+probe*.json
+stats*.json
+self-test.json

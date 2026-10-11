@@ -236,8 +236,6 @@ public sealed class MainForm : Form
         int seconds = new[] { 1, 5, 10, 15 }[Math.Max(0, averageDuration.SelectedIndex)];
         var source = averageStatus.Checked ? ChatStatus.Average(latest, history, seconds) : latest;
         string message = ChatStatus.Format(source, stats.Where(s => s.Value.Checked).Select(s => s.Key));
-        if (averageStatus.Checked && message.Length > 0) message = "Avg" + seconds + "s | " + message;
-        if (message.Length > 144) { int cut = message.LastIndexOf(" | ", 143, StringComparison.Ordinal); message = cut > 0 ? message[..cut] : message[..144]; }
         string state = broadcast.Checked ? "Broadcast enabled" : "Broadcast off";
         if (allowSend && broadcast.Checked && !paused && latest is not null && (DateTime.Now - latest.Timestamp).TotalSeconds < 3
             && message.Length > 0 && (DateTime.UtcNow - lastSend).TotalSeconds >= (double)sendInterval.Value)
